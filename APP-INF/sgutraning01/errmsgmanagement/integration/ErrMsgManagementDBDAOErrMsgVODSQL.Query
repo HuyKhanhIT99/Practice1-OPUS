@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<querys>
+		<query name="ErrMsgManagementDBDAOErrMsgVODSQL">
+			<desc><![CDATA[   ]]></desc>
+			<sql><![CDATA[
+   			]]></sql>
+			<params>
+			</params>
+		</query>
+	</querys>
+</sqls>
