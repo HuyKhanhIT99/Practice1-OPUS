@@ -76,6 +76,7 @@
 <body  onLoad="setupPage();">
 <form name="form">
 <input type="hidden" name="f_cmd">
+<input type="hidden" name="check_exist_err_msg_cd">
 <input type="hidden" name="pagerows">
 <!-- 개발자 작업	-->
 	<div class="page_title_area clear">

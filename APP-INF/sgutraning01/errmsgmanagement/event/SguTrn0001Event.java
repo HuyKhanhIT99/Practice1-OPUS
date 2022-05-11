@@ -35,6 +35,16 @@ public class SguTrn0001Event extends EventSupport {
 	
 	/** Table Value Object Multi Data 처리 */
 	ErrMsgVO[] errMsgVOs = null;
+	
+	String checkExistErrMSgCd ;
+
+	public String getCheckExistErrMSgCd() {
+		return checkExistErrMSgCd;
+	}
+
+	public void setCheckExistErrMSgCd(String checkExistErrMSgCd) {
+		this.checkExistErrMSgCd = checkExistErrMSgCd;
+	}
 
 	public SguTrn0001Event(){}
 	

@@ -29,6 +29,9 @@
 				case "btn_Save":
 					doActionIBSheet(sheetObject1, formObj, IBSAVE);
 					break;
+				case "btn_DownExcel":
+					doActionIBSheet(sheetObject1, formObj, IBDOWNEXCEL);
+					break;
 				}
 				
 		} catch (e) {
@@ -69,7 +72,13 @@
 //					sheetObj.DataInsert();
 					sheetObj.DataInsert(sheetObj.GetSelectRow());
 					break;
-				case IBDOWNEXCEL:	//엑셀다운로드
+				case IBDOWNEXCEL:
+					if(sheetObj.RowCount() < 1){
+						ComShowCodeMessage("COM132501");
+					}else{
+						sheetObj.Down2Excel({DownCols: makeHiddenSkipCol(sheetObj), SheetDesign:1, Merge:1});
+					}
+					break;//엑셀다운로드
 					
 	        }
 	    }
@@ -106,15 +115,52 @@
     function resizeSheet(){
    	         ComResizeSheet(sheetObjects[0]);
    }
-    function sheet1_OnChange(row, col, sheetObj) {
-    	 if(col == 2){
-     	    console.log(row);
-     	 }
+    function sheet1_OnChange(sheetObj,Row,Col){
+    	var code=sheetObj.GetCellValue(Row, Col);
+   	 if(Col == 2){
+	   		if(validationErrMsgCd(sheetObj,Row,Col)) 
+	   			checkDuplicate(sheetObj,Row,Col);
+   		 }
     }
-  
+    function checkDuplicate(sheetObj,Row,Col){
+    	var formObj = document.form;
+		var code=sheetObj.GetCellValue(Row, Col);
+		formObj.s_err_msg_cd.value=code;
+		formObj.check_exist_err_msg_cd.value="check";
+		formObj.f_cmd.value=SEARCH;
+		var on= sheetObj.GetSearchData("SGU_TRN_0001GS.do", FormQueryString(formObj) );
+		/// parse string to xml 
+		var parser = new DOMParser();  
+		var xmlDoc = parser.parseFromString(on, "text/xml");   
+		/// end parse 
+		var msg_code =xmlDoc.getElementsByTagName("MESSAGE")[0].childNodes[0].nodeValue;
+		if(msg_code == "COM131302" && code !=''){
+			ComShowCodeMessage(msg_code,code);
+			sheetObj.SetCellValue(Row, Col,"");
+			formObj.s_err_msg_cd.value='';
+			return;
+		}
+		formObj.s_err_msg_cd.value='';
+		
+    	
+    }
     function sheet1_OnBeforeSave() {
     	
-   }
-    function validateForm(sheetObj,formObj,sAction){
-
     }
+	
+	function validationErrMsgCd(sheetObj,Row,Col)
+	{
+		var code=sheetObj.GetCellValue(Row, Col);
+		var errMsgCdFormat = /^[A-Z]{3}[0-9]{5}$/;
+		if(!code.match(errMsgCdFormat))
+		{
+			if(code!=""){
+				ComShowCodeMessage("COM132201",code);
+				sheetObj.SetCellValue(Row, Col,"");
+			}
+			return false;
+		}
+		return true;
+		
+	}
+   

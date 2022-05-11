@@ -64,7 +64,9 @@ public class SGU_TRN_0001HTMLAction extends HTMLActionSupport {
 			ErrMsgVO errMsgVo = new ErrMsgVO();
 			errMsgVo.setErrMsg(JSPUtil.getParameter(request, "s_err_msg", ""));
 			errMsgVo.setErrMsgCd(JSPUtil.getParameter(request, "s_err_msg_cd", ""));
+			event.setCheckExistErrMSgCd(JSPUtil.getParameter(request, "check_exist_err_msg_cd", ""));
 			event.setErrMsgVO(errMsgVo);
+			
 		}
 		return  event;
 	}

@@ -18,13 +18,13 @@ SELECT
 FROM COM_ERR_MSG                                                    
 WHERE 1=1
 #if (${err_msg_cd} != '') 
-AND   err_msg_cd LIKE '%'||@[err_msg_cd]||'%'
+AND   err_msg_cd = @[err_msg_cd]
 #end
 #if (${err_msg} != '') 
 and	UPPER(err_msg) like '%'||UPPER(@[err_msg])|| '%'
 #end			]]></sql>
 			<params>
-				<param name="err_msg_cd" type="12" value="ERR" out="N"/>
+				<param name="err_msg_cd" type="12" value="ERR11111" out="N"/>
 				<param name="err_msg" type="12" value=" " out="N"/>
 			</params>
 		</query>

@@ -99,8 +99,18 @@ public class SguTraning01SC extends ServiceCommandSupport {
 		ErrMsgManagementBC command = new ErrMsgManagementBCImpl();
 
 		try{
-			List<ErrMsgVO> list = command.SErrMsgVO(event.getErrMsgVO());
-			eventResponse.setRsVoList(list);
+			if(event.getCheckExistErrMSgCd().equals("check")){
+				List<ErrMsgVO> list = command.SErrMsgVO(event.getErrMsgVO());
+				if(list.size()>0){
+					eventResponse.setUserMessage("COM131302");	
+				}else{
+					eventResponse.setUserMessage("COM130407");
+				}
+			}else{
+				List<ErrMsgVO> list = command.SErrMsgVO(event.getErrMsgVO());
+				eventResponse.setRsVoList(list);
+			}
+			
 		}catch(EventException ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}catch(Exception ex){
