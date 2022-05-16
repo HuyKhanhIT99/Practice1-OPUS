@@ -44,4 +44,6 @@ public interface ErrMsgManagementBC {
 	 * @exception EventException
 	 */
 	public void MErrMsgVO(ErrMsgVO[] errMsgVO,SignOnUserAccount account) throws EventException;
+	
+	public boolean validateErrMsgVO(ErrMsgVO errMsgVO) throws EventException;
 }

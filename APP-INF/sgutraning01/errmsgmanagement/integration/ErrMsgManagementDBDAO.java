@@ -73,6 +73,19 @@ public class ErrMsgManagementDBDAO extends DBDAOSupport {
 		}
 		return list;
 	}
+	 public boolean checkValidateErr(ErrMsgVO errMsgVO){
+		 try {
+			List<ErrMsgVO> list = SErrMsgVO(errMsgVO);
+			if(list.size() > 0 ){
+				return false;
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 return true;
+	 }
 	
 	/**
 	 * [처리대상] 정보를 [행위] 합니다.<br>

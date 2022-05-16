@@ -13,6 +13,7 @@
 package com.clt.apps.opus.esm.clv.sgutraning01;
 
 import java.util.List;
+
 import com.clt.apps.opus.esm.clv.sgutraning01.errmsgmanagement.basic.ErrMsgManagementBC;
 import com.clt.apps.opus.esm.clv.sgutraning01.errmsgmanagement.basic.ErrMsgManagementBCImpl;
 import com.clt.apps.opus.esm.clv.sgutraning01.errmsgmanagement.event.SguTrn0001Event;
@@ -100,19 +101,14 @@ public class SguTraning01SC extends ServiceCommandSupport {
 
 		try{
 			if(event.getCheckExistErrMSgCd().equals("check")){
-				List<ErrMsgVO> list = command.SErrMsgVO(event.getErrMsgVO());
-				if(list.size()>0){
-					eventResponse.setUserMessage("COM131302");	
-				}else{
-					eventResponse.setUserMessage("COM130407");
-				}
+				command.validateErrMsgVO(event.getErrMsgVO());
 			}else{
 				List<ErrMsgVO> list = command.SErrMsgVO(event.getErrMsgVO());
 				eventResponse.setRsVoList(list);
 			}
 			
 		}catch(EventException ex){
-			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+			eventResponse.setETCData("ERR_DUPLICATE",ex.getMessage());
 		}catch(Exception ex){
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}	

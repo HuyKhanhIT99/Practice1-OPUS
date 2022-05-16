@@ -14,6 +14,7 @@ package com.clt.apps.opus.esm.clv.sgutraning01.errmsgmanagement.basic;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.clt.apps.opus.esm.clv.sgutraning01.errmsgmanagement.integration.ErrMsgManagementDBDAO;
 import com.clt.framework.component.message.ErrorHandler;
 import com.clt.framework.core.layer.event.EventException;
@@ -56,6 +57,20 @@ public class ErrMsgManagementBCImpl extends BasicCommandSupport implements ErrMs
 		} catch (Exception ex) {
 			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
 		}
+		
+	}
+	public boolean validateErrMsgVO(ErrMsgVO errMsgVO) throws EventException {
+		try {
+			if(!dbDao.checkValidateErr(errMsgVO)){
+				throw new DAOException(new ErrorHandler("ERR00001",new String[]{"Master Code"}).getMessage());
+			}
+			return true;
+		} catch(DAOException ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		} catch (Exception ex) {
+			throw new EventException(new ErrorHandler(ex).getMessage(),ex);
+		}
+		
 		
 	}
 	
